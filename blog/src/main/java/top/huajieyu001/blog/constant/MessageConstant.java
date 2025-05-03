@@ -7,4 +7,6 @@ package top.huajieyu001.blog.constant;
  * @Description TODO
  */
 public class MessageConstant {
+
+    public static final String USERNAME_PATTERN_ERROR = "";
 }

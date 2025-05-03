@@ -7,4 +7,10 @@ package top.huajieyu001.blog.constant;
  * @Description TODO
  */
 public class MatchConstant {
+
+    public static final String CODE_REGEX = "[0-9]{6}";
+
+    public static final String USERNAME_REGEX = "[a-zA-Z0-9]{6,20}";
+
+    public static final String PASSWORD_REGEX = "[a-zA-Z0-9]{6,20}";
 }

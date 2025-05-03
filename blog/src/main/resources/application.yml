@@ -1,0 +1,29 @@
+
+server:
+  port: 8080
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: cat
+    password: Root@123456
+    url: jdbc:mysql://192.168.179.133:3306/db01?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+  data:
+    redis:
+      host: 192.168.179.140
+      port: 6379
+      password: 123456
+      lettuce:
+        pool:
+          max-active: 5
+          max-idle: 5
+          min-idle: 0
+          max-wait: 500
+  security:
+    user:
+      name: huajieyu
+      password: 123456
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

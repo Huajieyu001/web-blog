@@ -7,4 +7,6 @@ package top.huajieyu001.blog.result;
  * @Description TODO
  */
 public class VerifyResult {
+    private String state;
+    private String message;
 }

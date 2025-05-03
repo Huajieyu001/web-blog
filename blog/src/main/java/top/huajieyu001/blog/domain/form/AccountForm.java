@@ -1,4 +1,4 @@
-package top.huajieyu001.blog.domain;
+package top.huajieyu001.blog.domain.form;
 
 import lombok.Data;
 

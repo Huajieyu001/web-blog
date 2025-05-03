@@ -1,4 +1,4 @@
-package top.huajieyu001.blog.constant;
+package top.huajieyu001.blog.result;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
