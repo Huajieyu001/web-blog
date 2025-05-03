@@ -1,11 +1,16 @@
 package top.huajieyu001.blog.domain;
 
-import java.util.Date;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 
 /**
  * 
  * @TableName title
  */
+@AllArgsConstructor
+@NoArgsConstructor
 public class Title {
     /**
      * 标题id
@@ -30,7 +35,7 @@ public class Title {
     /**
      * 创建时间
      */
-    private Date createTime;
+    private LocalDateTime createTime;
 
     /**
      * 更新者
@@ -40,7 +45,7 @@ public class Title {
     /**
      * 更新时间
      */
-    private Date updateTime;
+    private LocalDateTime updateTime;
 
     /**
      * 0:未删除 1:已删除
@@ -106,14 +111,14 @@ public class Title {
     /**
      * 创建时间
      */
-    public Date getCreateTime() {
+    public LocalDateTime getCreateTime() {
         return createTime;
     }
 
     /**
      * 创建时间
      */
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
     }
 
@@ -134,14 +139,14 @@ public class Title {
     /**
      * 更新时间
      */
-    public Date getUpdateTime() {
+    public LocalDateTime getUpdateTime() {
         return updateTime;
     }
 
     /**
      * 更新时间
      */
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(LocalDateTime updateTime) {
         this.updateTime = updateTime;
     }
 

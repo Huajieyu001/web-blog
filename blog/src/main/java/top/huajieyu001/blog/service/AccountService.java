@@ -2,6 +2,9 @@ package top.huajieyu001.blog.service;
 
 import top.huajieyu001.blog.domain.Account;
 import com.baomidou.mybatisplus.extension.service.IService;
+import top.huajieyu001.blog.domain.form.AccountForm;
+import top.huajieyu001.blog.result.AjaxResult;
+import top.huajieyu001.blog.result.BlogResult;
 
 /**
 * @author xanadu
@@ -10,4 +13,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface AccountService extends IService<Account> {
 
+    AjaxResult signup(AccountForm accountForm);
+
+    AjaxResult getVerifyCode(String email);
+
+    AjaxResult login(String username, String password);
 }

@@ -14,10 +14,13 @@
             <result property="updatedBy" column="updated_by" />
             <result property="updateTime" column="update_time" />
             <result property="isDeleted" column="is_deleted" />
+            <result property="email" column="email" />
+            <result property="permissions" column="permissions" />
     </resultMap>
 
     <sql id="Base_Column_List">
         id,alias,username,password,created_by,create_time,
+          email,permissions
         updated_by,update_time,is_deleted
     </sql>
 </mapper>

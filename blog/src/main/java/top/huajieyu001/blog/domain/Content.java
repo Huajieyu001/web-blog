@@ -1,9 +1,15 @@
 package top.huajieyu001.blog.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 /**
  * 
  * @TableName content
  */
+@AllArgsConstructor
+@NoArgsConstructor
 public class Content {
     /**
      * 文章内容id
