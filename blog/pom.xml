@@ -109,6 +109,11 @@
 			<artifactId>hutool-core</artifactId>
 			<version>5.8.6</version>
 		</dependency>
+		<!-- Maven 邮件依赖 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
 
 		<!--		<dependency>-->
 <!--			<groupId>org.mybatis.spring.boot</groupId>-->
