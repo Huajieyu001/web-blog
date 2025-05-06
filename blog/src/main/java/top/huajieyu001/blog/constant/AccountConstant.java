@@ -15,10 +15,20 @@ public class AccountConstant {
     /**
      * 新用户默认权限
      */
-    public static final Integer ACCOUNT_DEFAULT_PERMISSIONS = 2;
+    public static final int ACCOUNT_DEFAULT_PERMISSIONS = 2;
 
     /**
      * 新用户默认是否删除
      */
-    public static final Integer ACCOUNT_DEFAULT_IS_DELETED = 0;
+    public static final int ACCOUNT_DEFAULT_IS_DELETED = 0;
+
+    /**
+     * 重试密码次数
+     */
+    public static final int ACCOUNT_DEFAULT_PASSWORD_VERIFY_COUNT = 5;
+
+    /**
+     * 字符串"Bearer "
+     */
+    public static final String BEARER = "Bearer ";
 }
