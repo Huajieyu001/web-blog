@@ -66,7 +66,7 @@ public class VerifyInterceptor implements HandlerInterceptor {
             account.setEmail(email);
             AccountHolder.setAccount(account);
 
-            stringRedisTemplate.opsForValue().set(RedisConstant.REDIS_KEY_ACCOUNT_USED_USERNAME, username);
+//            stringRedisTemplate.opsForValue().set(RedisConstant.REDIS_KEY_ACCOUNT_USED_USERNAME, username);
             // 下面的逻辑会生成无数个30分钟内可访问的token，弃用
 //            Date expiresAt = build.verify(authorization).getExpiresAt();
 //            if(expiresAt != null){

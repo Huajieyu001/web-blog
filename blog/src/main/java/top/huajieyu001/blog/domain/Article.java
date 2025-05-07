@@ -15,7 +15,7 @@ public class Article {
     /**
      * 文章id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * 文章标题
@@ -50,19 +50,19 @@ public class Article {
     /**
      * 0:未删除 1:已删除
      */
-    private Integer isDeleted;
+    private Long isDeleted;
 
     /**
      * 文章id
      */
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
     /**
      * 文章id
      */
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -153,14 +153,14 @@ public class Article {
     /**
      * 0:未删除 1:已删除
      */
-    public Integer getIsDeleted() {
+    public Long getIsDeleted() {
         return isDeleted;
     }
 
     /**
      * 0:未删除 1:已删除
      */
-    public void setIsDeleted(Integer isDeleted) {
+    public void setIsDeleted(Long isDeleted) {
         this.isDeleted = isDeleted;
     }
 
