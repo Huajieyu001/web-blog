@@ -40,4 +40,9 @@ public class RedisConstant {
 
     public static final String REDIS_KEY_ACCOUNT_USING_TOKEN = "account:using:token:";
 
+    public static final String REDIS_KEY_ARTICLE_INCR_ID = "article:incr_id";
+
+    public static final String REDIS_KEY_CONTENT_INCR_ID = "content:incr_id";
+
+
 }
