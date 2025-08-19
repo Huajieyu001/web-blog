@@ -14,7 +14,7 @@ public class Content {
     /**
      * 文章内容id
      */
-    private Integer contentId;
+    private Long contentId;
 
     /**
      * 文章内容
@@ -24,29 +24,24 @@ public class Content {
     /**
      * 文章id
      */
-    private Integer articleId;
-
-    /**
-     * 文章内容索引
-     */
-    private Integer contentIndex;
+    private Long articleId;
 
     /**
      * 0:未删除 1:已删除
      */
-    private Integer isDeleted;
+    private Long isDeleted;
 
     /**
      * 文章内容id
      */
-    public Integer getContentId() {
+    public Long getContentId() {
         return contentId;
     }
 
     /**
      * 文章内容id
      */
-    public void setContentId(Integer contentId) {
+    public void setContentId(Long contentId) {
         this.contentId = contentId;
     }
 
@@ -67,42 +62,28 @@ public class Content {
     /**
      * 文章id
      */
-    public Integer getArticleId() {
+    public Long getArticleId() {
         return articleId;
     }
 
     /**
      * 文章id
      */
-    public void setArticleId(Integer articleId) {
+    public void setArticleId(Long articleId) {
         this.articleId = articleId;
-    }
-
-    /**
-     * 文章内容索引
-     */
-    public Integer getContentIndex() {
-        return contentIndex;
-    }
-
-    /**
-     * 文章内容索引
-     */
-    public void setContentIndex(Integer contentIndex) {
-        this.contentIndex = contentIndex;
     }
 
     /**
      * 0:未删除 1:已删除
      */
-    public Integer getIsDeleted() {
+    public Long getIsDeleted() {
         return isDeleted;
     }
 
     /**
      * 0:未删除 1:已删除
      */
-    public void setIsDeleted(Integer isDeleted) {
+    public void setIsDeleted(Long isDeleted) {
         this.isDeleted = isDeleted;
     }
 
@@ -121,7 +102,6 @@ public class Content {
         return (this.getContentId() == null ? other.getContentId() == null : this.getContentId().equals(other.getContentId()))
             && (this.getContent() == null ? other.getContent() == null : this.getContent().equals(other.getContent()))
             && (this.getArticleId() == null ? other.getArticleId() == null : this.getArticleId().equals(other.getArticleId()))
-            && (this.getContentIndex() == null ? other.getContentIndex() == null : this.getContentIndex().equals(other.getContentIndex()))
             && (this.getIsDeleted() == null ? other.getIsDeleted() == null : this.getIsDeleted().equals(other.getIsDeleted()));
     }
 
@@ -132,7 +112,6 @@ public class Content {
         result = prime * result + ((getContentId() == null) ? 0 : getContentId().hashCode());
         result = prime * result + ((getContent() == null) ? 0 : getContent().hashCode());
         result = prime * result + ((getArticleId() == null) ? 0 : getArticleId().hashCode());
-        result = prime * result + ((getContentIndex() == null) ? 0 : getContentIndex().hashCode());
         result = prime * result + ((getIsDeleted() == null) ? 0 : getIsDeleted().hashCode());
         return result;
     }
@@ -146,7 +125,6 @@ public class Content {
         sb.append(", contentId=").append(contentId);
         sb.append(", content=").append(content);
         sb.append(", articleId=").append(articleId);
-        sb.append(", contentIndex=").append(contentIndex);
         sb.append(", isDeleted=").append(isDeleted);
         sb.append("]");
         return sb.toString();

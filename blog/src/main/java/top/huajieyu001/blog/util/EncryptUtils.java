@@ -8,7 +8,9 @@ import top.huajieyu001.blog.domain.Account;
 
 import java.security.SecureRandom;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * @Author huajieyu
@@ -21,6 +23,8 @@ public class EncryptUtils {
     private static final SecureRandom RANDOM = new SecureRandom();
 
     private static final BCryptPasswordEncoder ENCODER = new BCryptPasswordEncoder();
+
+    public static final String SIGNATURE = "wenzhenhao-2000";
 
     /**
      * 对文本进行不可逆加密
@@ -58,14 +62,14 @@ public class EncryptUtils {
     public static String createToken(Account account, String signature) {
         HashMap<String, Object> map = new HashMap<>();
         Calendar instance = Calendar.getInstance();
-        instance.add(Calendar.MINUTE, 30);
+        instance.add(Calendar.DATE, 30);
 
         return JWT.create()
                 .withHeader(map)
                 .withClaim("username", account.getUsername())
                 .withClaim("email", account.getEmail())
                 .withExpiresAt(instance.getTime())
-                .sign(Algorithm.HMAC256(signature));
+                .sign(Algorithm.HMAC256(SIGNATURE));
     }
 
     /**
@@ -75,7 +79,14 @@ public class EncryptUtils {
      * @return 解析后的用户
      */
     public static Account resolveToken(String token, String signature) {
-        JWTVerifier build = JWT.require(Algorithm.HMAC256(signature)).build();
+        JWTVerifier build = JWT.require(Algorithm.HMAC256(SIGNATURE)).build();
+        Date expiresAt = build.verify(token).getExpiresAt();
+        if (expiresAt != null) {
+            // 校验是否过期，如果令牌过期，则直接返回null
+            if (expiresAt.before(Calendar.getInstance().getTime())) {
+                return null;
+            }
+        }
         String username = build.verify(token).getClaim("username").asString();
         String email = build.verify(token).getClaim("email").asString();
         Account account = new Account();
