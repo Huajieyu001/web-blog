@@ -23,6 +23,11 @@ public class Article {
     private Long id;
 
     /**
+     * 文章类别id
+     */
+    private Long menuId;
+
+    /**
      * 文章标题
      */
     private String title;

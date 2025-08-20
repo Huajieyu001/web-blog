@@ -1,5 +1,8 @@
 package top.huajieyu001.blog.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.AllArgsConstructor;
@@ -8,6 +11,8 @@ import top.huajieyu001.blog.domain.Article;
 import top.huajieyu001.blog.holder.AccountHolder;
 import top.huajieyu001.blog.result.AjaxResult;
 import top.huajieyu001.blog.service.ArticleService;
+
+import java.util.List;
 
 /**
  * @Author huajieyu
@@ -53,9 +58,20 @@ public class ArticleController {
         return AjaxResult.success(service.getById(id));
     }
 
+//    @GetMapping("/list")
+//    public AjaxResult list(Integer pageNum, Integer pageSize) {
+//        System.out.println("pageNum:" + pageNum + "pageSize:" + pageSize);
+//            PageHelper.startPage(pageNum, pageSize);
+//        List<Article> list = service.getBaseMapper().selectList(null);
+//        return AjaxResult.success(new PageInfo<>(list));
+//    }
+
     @GetMapping("/list")
-    public AjaxResult list(Integer pageNum, Integer pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        return AjaxResult.success(new PageInfo<>(service.list()));
+    public AjaxResult list(Long menuId, Integer pageNum, Integer pageSize) {
+        System.out.println("pageNum:" + pageNum + ",   pageSize:" + pageSize);
+        Page<Article> page = new Page<>(pageNum, pageSize);
+        LambdaQueryWrapper<Article> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Article::getMenuId, menuId).orderByDesc(Article::getUpdateTime).orderByDesc(Article::getCreateTime);
+        return AjaxResult.success(service.page(page, wrapper));
     }
 }
