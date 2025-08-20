@@ -62,7 +62,7 @@ public class EncryptUtils {
     public static String createToken(Account account, String signature) {
         HashMap<String, Object> map = new HashMap<>();
         Calendar instance = Calendar.getInstance();
-        instance.add(Calendar.MINUTE, 30);
+        instance.add(Calendar.DATE, 30);
 
         return JWT.create()
                 .withHeader(map)
