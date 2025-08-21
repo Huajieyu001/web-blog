@@ -1,7 +1,7 @@
 package top.huajieyu001.blog.mapper;
 
-import top.huajieyu001.blog.domain.Title;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import top.huajieyu001.blog.domain.Menu;
 
 /**
 * @author xanadu
@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @createDate 2025-05-02 19:45:54
 * @Entity generator.domain.Title
 */
-public interface TitleMapper extends BaseMapper<Title> {
+public interface MenuMapper extends BaseMapper<Menu> {
 
 }
 

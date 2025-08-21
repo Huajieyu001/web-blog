@@ -1,10 +1,10 @@
 package top.huajieyu001.blog.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import top.huajieyu001.blog.domain.Title;
-import top.huajieyu001.blog.service.TitleService;
-import top.huajieyu001.blog.mapper.TitleMapper;
 import org.springframework.stereotype.Service;
+import top.huajieyu001.blog.domain.Menu;
+import top.huajieyu001.blog.mapper.MenuMapper;
+import top.huajieyu001.blog.service.MenuService;
 
 /**
 * @author xanadu
@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 * @createDate 2025-05-02 19:45:54
 */
 @Service
-public class TitleServiceImpl extends ServiceImpl<TitleMapper, Title>
-    implements TitleService{
+public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu>
+    implements MenuService {
 
 }
 

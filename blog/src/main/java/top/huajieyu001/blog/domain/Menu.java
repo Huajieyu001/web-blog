@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
  */
 @AllArgsConstructor
 @NoArgsConstructor
-public class Title {
+public class Menu {
     /**
      * 标题id
      */
@@ -175,7 +175,7 @@ public class Title {
         if (getClass() != that.getClass()) {
             return false;
         }
-        Title other = (Title) that;
+        Menu other = (Menu) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
             && (this.getComment() == null ? other.getComment() == null : this.getComment().equals(other.getComment()))
