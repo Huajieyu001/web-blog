@@ -13,5 +13,5 @@ public class AccountForm {
     private String username;
     private String password;
     private String email;
-    private String verificationCode;
+    private String captcha;
 }

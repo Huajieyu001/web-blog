@@ -41,10 +41,19 @@ public class VerifyInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
+        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            return true;
+        }
+
         String authorization = request.getHeader("Authorization");
+
+        if(authorization == null){
+            return false;
+        }
 
         JWTVerifier build = JWT.require(Algorithm.HMAC256("wenzhenhao-2000")).build();
         try{
+            System.out.println("authorization:"+authorization);
             build.verify(authorization);
 
             String username = build.verify(authorization).getClaim("username").asString();
@@ -66,17 +75,6 @@ public class VerifyInterceptor implements HandlerInterceptor {
             account.setEmail(email);
             AccountHolder.setAccount(account);
 
-//            stringRedisTemplate.opsForValue().set(RedisConstant.REDIS_KEY_ACCOUNT_USED_USERNAME, username);
-            // 下面的逻辑会生成无数个30分钟内可访问的token，弃用
-//            Date expiresAt = build.verify(authorization).getExpiresAt();
-//            if(expiresAt != null){
-//                long time = expiresAt.getTime();
-//                // 如果过期时间小于30分钟，此时有接口被访问，则刷新一下token
-//                if(time - System.currentTimeMillis() < 1000 * 60 * 30){
-//                    String token = EncryptUtils.createToken(account, "");
-//                    response.setHeader("RefreshToken", token);
-//                }
-//            }
             return true;
         } catch (SignatureVerificationException e) {
             e.printStackTrace();

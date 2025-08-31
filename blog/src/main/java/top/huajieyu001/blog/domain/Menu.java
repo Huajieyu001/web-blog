@@ -1,5 +1,9 @@
 package top.huajieyu001.blog.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +19,7 @@ public class Menu {
     /**
      * 标题id
      */
+    @TableId(type = IdType.AUTO)
     private Integer id;
 
     /**
@@ -35,6 +40,7 @@ public class Menu {
     /**
      * 创建时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Shanghai")
     private LocalDateTime createTime;
 
     /**
@@ -45,6 +51,7 @@ public class Menu {
     /**
      * 更新时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Shanghai")
     private LocalDateTime updateTime;
 
     /**
