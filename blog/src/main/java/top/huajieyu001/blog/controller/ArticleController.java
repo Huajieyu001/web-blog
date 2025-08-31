@@ -32,14 +32,14 @@ public class ArticleController {
         return AjaxResult.success(AccountHolder.getAccount());
     }
 
-    @PostMapping()
+    @PostMapping("/add")
     public AjaxResult add(@RequestBody Article article) {
         System.out.println("===========");
         System.out.println(article);
         return AjaxResult.success(service.save(article));
     }
 
-    @DeleteMapping()
+    @DeleteMapping("/delete")
     public AjaxResult delete(@RequestBody Article article) {
         Article temp = new Article();
         temp.setId(article.getId());
@@ -47,13 +47,13 @@ public class ArticleController {
         return AjaxResult.success(service.updateById(temp));
     }
 
-    @PutMapping()
+    @PutMapping("/update")
     public AjaxResult update(@RequestBody Article article) {
         article.setVersion(article.getVersion() + 1);
         return AjaxResult.success(service.updateById(article));
     }
 
-    @GetMapping
+    @GetMapping("/get")
     public AjaxResult get(String id) {
         return AjaxResult.success(service.getById(id));
     }

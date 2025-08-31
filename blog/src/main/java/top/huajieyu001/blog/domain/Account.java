@@ -1,5 +1,7 @@
 package top.huajieyu001.blog.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,6 +19,7 @@ public class Account {
     /**
      * 账号id
      */
+    @TableId(type = IdType.AUTO)
     private Integer id;
 
     /**

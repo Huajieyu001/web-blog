@@ -1,5 +1,9 @@
 package top.huajieyu001.blog.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -11,10 +15,11 @@ import java.time.LocalDateTime;
  */
 @AllArgsConstructor
 @NoArgsConstructor
-public class Title {
+public class Menu {
     /**
      * 标题id
      */
+    @TableId(type = IdType.AUTO)
     private Integer id;
 
     /**
@@ -35,6 +40,7 @@ public class Title {
     /**
      * 创建时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Shanghai")
     private LocalDateTime createTime;
 
     /**
@@ -45,6 +51,7 @@ public class Title {
     /**
      * 更新时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Shanghai")
     private LocalDateTime updateTime;
 
     /**
@@ -175,7 +182,7 @@ public class Title {
         if (getClass() != that.getClass()) {
             return false;
         }
-        Title other = (Title) that;
+        Menu other = (Menu) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
             && (this.getComment() == null ? other.getComment() == null : this.getComment().equals(other.getComment()))

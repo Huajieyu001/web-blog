@@ -58,8 +58,7 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account>
         stringRedisTemplate.opsForValue().set(RedisConstant.REDIS_KEY_ACCOUNT_CODE + email, code);
         stringRedisTemplate.expire(RedisConstant.REDIS_KEY_ACCOUNT_CODE + email, 5, TimeUnit.MINUTES);
 
-        // TODO 发送验证码的邮件给用户邮箱
-//        emailService.sendVerificationCode(email, code);
+        emailService.sendVerificationCode(email, code);
 
         return AjaxResult.successAndSetMsg("验证码已发送到您的邮箱，请注意查收，有效时间为5分钟");
     }
@@ -84,9 +83,9 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account>
         String code = stringRedisTemplate.opsForValue().get(RedisConstant.REDIS_KEY_ACCOUNT_CODE + accountForm.getEmail());
         // 验证验证码是否正确
         if (code == null || code.isEmpty()) {
-            return AjaxResult.error("验证码已过期，请重新获取");
+            return AjaxResult.error("您未获取验证码或者验证码已过期，请重新获取");
         }
-        if (!code.equals(accountForm.getVerificationCode())) {
+        if (!code.equals(accountForm.getCaptcha())) {
             return AjaxResult.error("验证码有误，请重新输入");
         }
 

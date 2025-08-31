@@ -20,7 +20,7 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
 
-    @GetMapping("/code")
+    @GetMapping("/getCode")
     public AjaxResult getVerifyCode(String email) {
         return accountService.getVerifyCode(email);
     }
@@ -31,8 +31,8 @@ public class AccountController {
     }
 
     @PostMapping("/login")
-    public AjaxResult login(String username, String password) {
-        return accountService.login(username, password);
+    public AjaxResult login(@RequestBody AccountForm accountForm) {
+        return accountService.login(accountForm.getUsername(), accountForm.getPassword());
     }
 
 //    @GetMapping

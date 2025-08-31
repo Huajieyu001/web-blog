@@ -25,7 +25,10 @@ public class InterceptorConfig implements WebMvcConfigurer {
         // 配置拦截器
         registry.addInterceptor(new VerifyInterceptor(stringRedisTemplate))
                 .addPathPatterns("/**")
-                .excludePathPatterns("/account/**");
+                .excludePathPatterns("/account/**")
+                .excludePathPatterns("/menu/list")
+                .excludePathPatterns("/article/list")
+                .excludePathPatterns("/article/get");
         WebMvcConfigurer.super.addInterceptors(registry);
     }
 
