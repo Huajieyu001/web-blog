@@ -12,6 +12,7 @@ import top.huajieyu001.blog.holder.AccountHolder;
 import top.huajieyu001.blog.result.AjaxResult;
 import top.huajieyu001.blog.service.ArticleService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -34,44 +35,42 @@ public class ArticleController {
 
     @PostMapping("/add")
     public AjaxResult add(@RequestBody Article article) {
-        System.out.println("===========");
-        System.out.println(article);
+        article.setIsDeleted(0);
         return AjaxResult.success(service.save(article));
     }
 
-    @DeleteMapping("/delete")
+    @PostMapping("/delete")
     public AjaxResult delete(@RequestBody Article article) {
-        Article temp = new Article();
-        temp.setId(article.getId());
-        temp.setIsDeleted(1L);
-        return AjaxResult.success(service.updateById(temp));
+        article.setIsDeleted(1);
+        article.setUpdateTime(LocalDateTime.now());
+        return AjaxResult.success(service.updateById(article));
     }
 
-    @PutMapping("/update")
+    @PostMapping("/update")
     public AjaxResult update(@RequestBody Article article) {
-        article.setVersion(article.getVersion() + 1);
+        article.setVersion(article.getVersion() == null ? 1 : article.getVersion() + 1);
+        article.setUpdateTime(LocalDateTime.now());
         return AjaxResult.success(service.updateById(article));
     }
 
     @GetMapping("/get")
     public AjaxResult get(String id) {
-        return AjaxResult.success(service.getById(id));
+        Article article = service.getById(id);
+        if(article == null || article.getIsDeleted() == null || article.getIsDeleted() != 0){
+            return AjaxResult.error("该文章不存在");
+        }
+        return AjaxResult.success(article);
     }
-
-//    @GetMapping("/list")
-//    public AjaxResult list(Integer pageNum, Integer pageSize) {
-//        System.out.println("pageNum:" + pageNum + "pageSize:" + pageSize);
-//            PageHelper.startPage(pageNum, pageSize);
-//        List<Article> list = service.getBaseMapper().selectList(null);
-//        return AjaxResult.success(new PageInfo<>(list));
-//    }
 
     @GetMapping("/list")
     public AjaxResult list(Long menuId, Integer pageNum, Integer pageSize) {
-        System.out.println("pageNum:" + pageNum + ",   pageSize:" + pageSize);
         Page<Article> page = new Page<>(pageNum, pageSize);
         LambdaQueryWrapper<Article> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(Article::getMenuId, menuId).orderByDesc(Article::getUpdateTime).orderByDesc(Article::getCreateTime);
+        if(menuId != null) {
+            wrapper.eq(Article::getMenuId, menuId);
+        }
+        wrapper.eq(Article::getIsDeleted, 0);
+        wrapper.orderByDesc(Article::getUpdateTime).orderByDesc(Article::getCreateTime);
         return AjaxResult.success(service.page(page, wrapper));
     }
 }

@@ -48,6 +48,7 @@ public class VerifyInterceptor implements HandlerInterceptor {
         String authorization = request.getHeader("Authorization");
 
         if(authorization == null){
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "认证失败");
             return false;
         }
 
@@ -61,11 +62,13 @@ public class VerifyInterceptor implements HandlerInterceptor {
 
             // 判断是否解析成功，如果username或者email是null则代表获取参数失败，信息不完整
             if(username == null || email == null){
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "认证失败");
                 return false;
             }
             // 判断当前用户是否是已注册用户
             Boolean member = stringRedisTemplate.opsForSet().isMember(RedisConstant.REDIS_KEY_ACCOUNT_USED_USERNAME, username);
             if(Boolean.FALSE.equals(member)){
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "认证失败");
                 return false;
             }
 
@@ -79,18 +82,22 @@ public class VerifyInterceptor implements HandlerInterceptor {
         } catch (SignatureVerificationException e) {
             e.printStackTrace();
             response.getWriter().write("无效签名");
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "认证失败");
             return false;
         } catch (TokenExpiredException e) {
             e.printStackTrace();
             response.getWriter().write("令牌已过期");
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "认证失败");
             return false;
         } catch (AlgorithmMismatchException e) {
             e.printStackTrace();
             response.getWriter().write("算法匹配失败");
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "认证失败");
             return false;
         } catch (Exception e) {
             e.printStackTrace();
             response.getWriter().write("校验失败");
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "认证失败");
             return false;
         }
     }
