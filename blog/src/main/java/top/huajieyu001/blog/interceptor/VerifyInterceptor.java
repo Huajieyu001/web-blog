@@ -54,7 +54,6 @@ public class VerifyInterceptor implements HandlerInterceptor {
 
         JWTVerifier build = JWT.require(Algorithm.HMAC256("wenzhenhao-2000")).build();
         try{
-            System.out.println("authorization:"+authorization);
             build.verify(authorization);
 
             String username = build.verify(authorization).getClaim("username").asString();
