@@ -39,7 +39,7 @@ public class ArticleController {
 
     @PostMapping("/delete")
     public AjaxResult delete(@RequestBody Article article) {
-        if (!AccountHolder.verifyPermissions(article.getCreateBy())) {
+        if (!AccountHolder.isAdmin()) {
             return AjaxResult.error(MessageConstant.PERMISSIONS_DENIED);
         }
         article.setIsDeleted(1);
@@ -49,7 +49,7 @@ public class ArticleController {
 
     @PostMapping("/update")
     public AjaxResult update(@RequestBody Article article) {
-        if (!AccountHolder.verifyPermissions(article.getCreateBy())) {
+        if (!AccountHolder.isAdmin()) {
             return AjaxResult.error(MessageConstant.PERMISSIONS_DENIED);
         }
         article.setVersion(article.getVersion() == null ? 1 : article.getVersion() + 1);

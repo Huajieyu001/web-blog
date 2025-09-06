@@ -10,7 +10,7 @@ public class AccountConstant {
     /**
      * 默认创建者
      */
-    public static final String ACCOUNT_DEFAULT_CREATE_BY = "system";
+    public static final Long ACCOUNT_DEFAULT_CREATE_BY = 1L;
 
     /**
      * 新用户默认权限

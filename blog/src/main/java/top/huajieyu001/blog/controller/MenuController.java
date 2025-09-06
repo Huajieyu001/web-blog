@@ -24,7 +24,7 @@ public class MenuController {
     @Autowired
     private MenuService menuService;
 
-    @Value("{admin-email}")
+    @Value("${admin-email}")
     private String adminEmail;
 
     @GetMapping("/list")
@@ -34,7 +34,7 @@ public class MenuController {
 
     @PostMapping("/add")
     public AjaxResult add(@RequestBody Menu menu) {
-        if (!AccountHolder.getAccount().getEmail().equals(adminEmail)) {
+        if (!AccountHolder.isAdmin()) {
             return AjaxResult.error(MessageConstant.PERMISSIONS_DENIED);
         }
         Menu condition = menuService.lambdaQuery().eq(Menu::getName, menu.getName()).eq(Menu::getIsDeleted, 0).one();
@@ -47,7 +47,7 @@ public class MenuController {
 
     @PostMapping("/update")
     public AjaxResult update(@RequestBody Menu menu) {
-        if (!AccountHolder.getAccount().getEmail().equals(adminEmail)) {
+        if (!AccountHolder.isAdmin()) {
             return AjaxResult.error(MessageConstant.PERMISSIONS_DENIED);
         }
         Menu condition = menuService.lambdaQuery().eq(Menu::getName, menu.getName()).eq(Menu::getIsDeleted, 0).one();
@@ -63,7 +63,7 @@ public class MenuController {
 
     @PostMapping("/delete")
     public AjaxResult delete(@RequestBody Menu menu) {
-        if (!AccountHolder.getAccount().getEmail().equals(adminEmail)) {
+        if (!AccountHolder.isAdmin()) {
             return AjaxResult.error(MessageConstant.PERMISSIONS_DENIED);
         }
         menu.setIsDeleted(1);

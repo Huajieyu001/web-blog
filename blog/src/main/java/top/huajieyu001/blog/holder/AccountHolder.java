@@ -31,4 +31,12 @@ public class AccountHolder {
 
         return false;
     }
+
+    public static boolean isAdmin() {
+        if (tl.get() == null) {
+            return false;
+        }
+
+        return tl.get().getPermissions() == 1;
+    }
 }
