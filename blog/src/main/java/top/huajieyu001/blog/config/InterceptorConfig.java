@@ -1,6 +1,8 @@
 package top.huajieyu001.blog.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -25,19 +27,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
         // 配置拦截器
         registry.addInterceptor(new VerifyInterceptor(stringRedisTemplate))
                 .addPathPatterns("/**")
-                .excludePathPatterns("/account/**")
-                .excludePathPatterns("/menu/list")
-                .excludePathPatterns("/article/list")
-                .excludePathPatterns("/article/get");
+                .excludePathPatterns("/account/signup","/account/getCode","/account/login","/menu/list","/article/list","/article/get");
         WebMvcConfigurer.super.addInterceptors(registry);
-    }
-
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins("http://localhost:5173")
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                .allowCredentials(true)
-                .maxAge(3600);
     }
 }
