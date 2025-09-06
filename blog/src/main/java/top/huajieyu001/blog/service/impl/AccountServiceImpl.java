@@ -3,15 +3,20 @@ package top.huajieyu001.blog.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
+import com.baomidou.mybatisplus.extension.conditions.update.LambdaUpdateChainWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PostMapping;
 import top.huajieyu001.blog.constant.AccountConstant;
 import top.huajieyu001.blog.constant.RedisConstant;
 import top.huajieyu001.blog.domain.Account;
+import top.huajieyu001.blog.domain.TokenPojo;
 import top.huajieyu001.blog.domain.form.AccountForm;
+import top.huajieyu001.blog.domain.form.UpdatePwdForm;
+import top.huajieyu001.blog.holder.AccountHolder;
 import top.huajieyu001.blog.mapper.AccountMapper;
 import top.huajieyu001.blog.result.AjaxResult;
 import top.huajieyu001.blog.result.AjaxResult;
@@ -171,7 +176,37 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account>
 
         // 生成JWT令牌
         String token = EncryptUtils.createToken(account, "");
-        return AjaxResult.success(token);
+        return AjaxResult.success(token, "登录成功");
+    }
+
+    @Override
+    @Transactional
+    public AjaxResult changePassword(UpdatePwdForm form) {
+        TokenPojo account = AccountHolder.getAccount();
+        if(account == null) {
+            return AjaxResult.error("用户信息不存在");
+        }
+
+        LambdaQueryChainWrapper<Account> wrapper = this.lambdaQuery();
+        wrapper.eq(Account::getUsername, account.getUsername());
+
+        Account getAccount = wrapper.one();
+        if(getAccount == null) {
+            return AjaxResult.error("未查询到该用户");
+        }
+
+        if(!EncryptUtils.verifyPassword(form.getOldPassword(), getAccount.getPassword())) {
+            return AjaxResult.error("密码不正确");
+        }
+
+        LambdaUpdateChainWrapper<Account> updateWrapper = this.lambdaUpdate();
+        updateWrapper.set(Account::getPassword, EncryptUtils.encrypt(form.getNewPassword()));
+        updateWrapper.eq(Account::getUsername, account.getUsername());
+
+        if(updateWrapper.update()){
+            stringRedisTemplate.opsForSet().add(RedisConstant.REDIS_KEY_TOKEN_BLACK_LIST, account.getToken());
+        }
+        return AjaxResult.success();
     }
 }
 

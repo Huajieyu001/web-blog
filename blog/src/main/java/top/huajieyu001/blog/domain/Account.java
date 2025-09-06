@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 /**
- * 
  * @TableName account
  */
 @AllArgsConstructor
@@ -21,7 +20,7 @@ public class Account {
      * 账号id
      */
     @TableId(type = IdType.AUTO)
-    private Integer id;
+    private Long id;
 
     /**
      * 昵称
@@ -51,7 +50,7 @@ public class Account {
     /**
      * 创建者
      */
-    private String createdBy;
+    private Long createBy;
 
     /**
      * 创建时间
@@ -62,7 +61,7 @@ public class Account {
     /**
      * 更新者
      */
-    private String updatedBy;
+    private Long updateBy;
 
     /**
      * 更新时间

@@ -29,13 +29,13 @@ public class EmailServiceImpl implements EmailService {
     @Override
     public void sendVerificationCode(String target, String code) {
         AjaxResult ajaxResult = VerifyUtils.verifyEmail(target);
-        if(ajaxResult.getCode() != 200){
+        if (ajaxResult.getCode() != 200) {
             throw new RuntimeException("目标邮箱格式错误");
         }
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(myEmail);
         message.setTo(target);
-        message.setSubject("【个人网站】邮箱验证码");
+        message.setSubject("【花解语的札记】邮箱验证码");
         message.setText("您的验证码是：" + code + "，有效期为5分钟。");
 
         mailSender.send(message);

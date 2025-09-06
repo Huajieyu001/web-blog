@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 /**
- * 
  * @TableName article
  */
 @AllArgsConstructor
@@ -56,7 +55,7 @@ public class Article {
     /**
      * 创建者
      */
-    private String createBy;
+    private Long createBy;
 
     /**
      * 创建时间
@@ -67,7 +66,7 @@ public class Article {
     /**
      * 更新者
      */
-    private String updateBy;
+    private Long updateBy;
 
     /**
      * 更新时间
