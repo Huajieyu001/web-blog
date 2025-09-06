@@ -9,4 +9,6 @@ package top.huajieyu001.blog.constant;
 public class MessageConstant {
 
     public static final String USERNAME_PATTERN_ERROR = "";
+
+    public static final String PERMISSIONS_DENIED = "无权限操作";
 }

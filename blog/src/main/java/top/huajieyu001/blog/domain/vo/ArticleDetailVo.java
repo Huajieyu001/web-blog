@@ -31,7 +31,7 @@ public class ArticleDetailVo {
     /**
      * 创建者
      */
-    private String createdBy;
+    private Long createdBy;
 
     /**
      * 创建时间
@@ -41,7 +41,7 @@ public class ArticleDetailVo {
     /**
      * 更新者
      */
-    private String updatedBy;
+    private Long updatedBy;
 
     /**
      * 更新时间

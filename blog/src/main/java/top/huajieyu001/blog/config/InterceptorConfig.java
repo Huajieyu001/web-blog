@@ -1,11 +1,8 @@
 package top.huajieyu001.blog.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import top.huajieyu001.blog.interceptor.VerifyInterceptor;
@@ -27,7 +24,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
         // 配置拦截器
         registry.addInterceptor(new VerifyInterceptor(stringRedisTemplate))
                 .addPathPatterns("/**")
-                .excludePathPatterns("/account/signup","/account/getCode","/account/login","/menu/list","/article/list","/article/get");
+                .excludePathPatterns("/account/signup", "/account/getCode", "/account/login", "/menu/list", "/article/list", "/article/get", "/error");
         WebMvcConfigurer.super.addInterceptors(registry);
     }
 }

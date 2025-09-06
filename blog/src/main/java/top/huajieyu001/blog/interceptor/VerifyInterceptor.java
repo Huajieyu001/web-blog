@@ -8,25 +8,20 @@ import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
-import top.huajieyu001.blog.constant.AccountConstant;
 import top.huajieyu001.blog.constant.RedisConstant;
 import top.huajieyu001.blog.domain.Account;
 import top.huajieyu001.blog.domain.TokenPojo;
 import top.huajieyu001.blog.holder.AccountHolder;
-import top.huajieyu001.blog.util.EncryptUtils;
-import top.huajieyu001.blog.util.VerifyUtils;
 
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,6 +34,10 @@ import java.util.Map;
 public class VerifyInterceptor implements HandlerInterceptor {
 
     private final StringRedisTemplate stringRedisTemplate;
+
+    private ObjectMapper mapper = new ObjectMapper()
+            .registerModule(new JavaTimeModule())
+            .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
     public VerifyInterceptor(StringRedisTemplate stringRedisTemplate) {
         this.stringRedisTemplate = stringRedisTemplate;
@@ -55,31 +54,31 @@ public class VerifyInterceptor implements HandlerInterceptor {
 
         String authorization = request.getHeader("Authorization");
 
-        if(authorization == null){
+        if (authorization == null) {
             setUnauthorizedResponse(response, "认证失败");
             return false;
         }
 
-        if(Boolean.TRUE.equals(stringRedisTemplate.opsForSet().isMember(RedisConstant.REDIS_KEY_TOKEN_BLACK_LIST, authorization))){
+        if (Boolean.TRUE.equals(stringRedisTemplate.opsForSet().isMember(RedisConstant.REDIS_KEY_TOKEN_BLACK_LIST, authorization))) {
             setUnauthorizedResponse(response, "认证失败");
             return false;
         }
 
         JWTVerifier build = JWT.require(Algorithm.HMAC256("wenzhenhao-2000")).build();
-        try{
+        try {
             DecodedJWT verified = build.verify(authorization);
 
             String accountString = verified.getClaim("account").asString();
-            Account readAccount = new ObjectMapper().readValue(accountString, Account.class);
+            Account readAccount = mapper.readValue(accountString, Account.class);
 
             // 判断是否解析成功，如果username或者email是null则代表获取参数失败，信息不完整
-            if(readAccount.getUsername() == null || readAccount.getEmail() == null){
+            if (readAccount.getUsername() == null || readAccount.getEmail() == null) {
                 setUnauthorizedResponse(response, "认证失败");
                 return false;
             }
             // 判断当前用户是否是已注册用户
-            Boolean member = stringRedisTemplate.opsForSet().isMember(RedisConstant.REDIS_KEY_ACCOUNT_USED_USERNAME, readAccount.getEmail());
-            if(Boolean.FALSE.equals(member)){
+            Boolean member = stringRedisTemplate.opsForSet().isMember(RedisConstant.REDIS_KEY_ACCOUNT_USED_USERNAME, readAccount.getUsername());
+            if (Boolean.FALSE.equals(member)) {
                 setUnauthorizedResponse(response, "认证失败");
                 return false;
             }
@@ -110,20 +109,20 @@ public class VerifyInterceptor implements HandlerInterceptor {
         }
     }
 
-    private void refreshToken(){
+    private void refreshToken() {
         stringRedisTemplate.opsForValue().get(RedisConstant.REDIS_KEY_ACCOUNT_ACTIVE_STATE);
     }
 
-    private void setUnauthorizedResponse(HttpServletResponse resp, String message){
+    private void setUnauthorizedResponse(HttpServletResponse resp, String message) {
         resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         resp.setContentType(MediaType.APPLICATION_JSON_VALUE);
         resp.setCharacterEncoding("UTF-8");
 
-        Map<String,Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         map.put("message", message);
 
         try {
-            resp.getWriter().write(new ObjectMapper().writeValueAsString(map));
+            resp.getWriter().write(mapper.writeValueAsString(map));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

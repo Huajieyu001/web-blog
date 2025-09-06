@@ -7,13 +7,13 @@ import top.huajieyu001.blog.mapper.MenuMapper;
 import top.huajieyu001.blog.service.MenuService;
 
 /**
-* @author xanadu
-* @description 针对表【title】的数据库操作Service实现
-* @createDate 2025-05-02 19:45:54
-*/
+ * @author xanadu
+ * @description 针对表【title】的数据库操作Service实现
+ * @createDate 2025-05-02 19:45:54
+ */
 @Service
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu>
-    implements MenuService {
+        implements MenuService {
 
 }
 

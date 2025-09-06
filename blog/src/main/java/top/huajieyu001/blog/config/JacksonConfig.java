@@ -15,10 +15,10 @@ public class JacksonConfig {
         return builder -> {
             // 设置全局日期格式
             builder.simpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            
+
             // 设置时区
             builder.timeZone(TimeZone.getTimeZone("Asia/Shanghai"));
-            
+
             // 禁用时间戳格式
             builder.featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         };

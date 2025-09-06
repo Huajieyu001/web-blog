@@ -29,7 +29,7 @@ public class EmailServiceImpl implements EmailService {
     @Override
     public void sendVerificationCode(String target, String code) {
         AjaxResult ajaxResult = VerifyUtils.verifyEmail(target);
-        if(ajaxResult.getCode() != 200){
+        if (ajaxResult.getCode() != 200) {
             throw new RuntimeException("目标邮箱格式错误");
         }
         SimpleMailMessage message = new SimpleMailMessage();

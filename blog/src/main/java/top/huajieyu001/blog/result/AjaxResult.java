@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
  * @author huajieyu
  */
 @Getter
-public class AjaxResult{
+public class AjaxResult {
 
     private int code;
 
@@ -43,6 +43,10 @@ public class AjaxResult{
 
     public static AjaxResult error(int code, String msg) {
         return new AjaxResult(code, msg, null);
+    }
+
+    public static AjaxResult success(Object data, String msg) {
+        return new AjaxResult(HttpStatus.OK.value(), msg, data);
     }
 
 }

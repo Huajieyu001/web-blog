@@ -1,6 +1,5 @@
 package top.huajieyu001.blog.holder;
 
-import top.huajieyu001.blog.domain.Account;
 import top.huajieyu001.blog.domain.TokenPojo;
 
 /**
@@ -21,12 +20,12 @@ public class AccountHolder {
         tl.set(account);
     }
 
-    public static boolean verifyPermissions(String username){
-        if(tl.get() == null || username == null || username.isEmpty()){
+    public static boolean verifyPermissions(Long id) {
+        if (tl.get() == null || id == null) {
             return false;
         }
 
-        if(tl.get().getUsername().equals(username)){
+        if (tl.get().getId().equals(id)) {
             return true;
         }
 

@@ -5,6 +5,8 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import top.huajieyu001.blog.domain.Account;
 
@@ -12,7 +14,6 @@ import java.security.SecureRandom;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.UUID;
 
 /**
  * @Author huajieyu
@@ -30,6 +31,7 @@ public class EncryptUtils {
 
     /**
      * 对文本进行不可逆加密
+     *
      * @param plainText 需要加密的文本
      * @return 加密后的文本
      */
@@ -39,7 +41,8 @@ public class EncryptUtils {
 
     /**
      * 验证密码是否正确
-     * @param password 密码
+     *
+     * @param password    密码
      * @param encryptText 加密密文
      * @return 验证结果
      */
@@ -49,15 +52,17 @@ public class EncryptUtils {
 
     /**
      * 生成6位数验证码
+     *
      * @return 验证码
      */
-    public static String createCode(){
+    public static String createCode() {
         return String.format("%06d", RANDOM.nextInt(1000000));
     }
 
     /**
      * 生成JWT令牌token
-     * @param account 生产令牌的用户
+     *
+     * @param account   生产令牌的用户
      * @param signature 签名
      * @return 令牌
      */
@@ -66,10 +71,16 @@ public class EncryptUtils {
         Calendar instance = Calendar.getInstance();
         instance.add(Calendar.HOUR, 12);
 
+        ObjectMapper mapper = new ObjectMapper()
+                .registerModule(new JavaTimeModule())
+                .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+
+        // 使用方式不变
+
         try {
             return JWT.create()
                     .withHeader(map)
-                    .withClaim("account", new ObjectMapper().writeValueAsString(account))
+                    .withClaim("account", mapper.writeValueAsString(account))
                     .withExpiresAt(instance.getTime())
                     .sign(Algorithm.HMAC256(SIGNATURE));
         } catch (JsonProcessingException e) {
@@ -79,6 +90,7 @@ public class EncryptUtils {
 
     /**
      * 根据签名解析JWT令牌token
+     *
      * @param token
      * @param signature 签名
      * @return 解析后的用户

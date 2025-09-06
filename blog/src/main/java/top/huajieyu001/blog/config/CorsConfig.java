@@ -1,18 +1,10 @@
 package top.huajieyu001.blog.config;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import top.huajieyu001.blog.properties.CorsProperties;
-
-import java.util.List;
 
 /**
  * @Author huajieyu

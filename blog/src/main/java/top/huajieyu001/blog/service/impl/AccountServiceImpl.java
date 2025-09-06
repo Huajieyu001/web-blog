@@ -176,7 +176,7 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account>
 
         // 生成JWT令牌
         String token = EncryptUtils.createToken(account, "");
-        return AjaxResult.success(token);
+        return AjaxResult.success(token, "登录成功");
     }
 
     @Override

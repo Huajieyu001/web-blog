@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.*;
 import top.huajieyu001.blog.domain.form.AccountForm;
 import top.huajieyu001.blog.domain.form.UpdatePwdForm;
 import top.huajieyu001.blog.result.AjaxResult;
-import top.huajieyu001.blog.result.BlogResult;
 import top.huajieyu001.blog.service.AccountService;
 
 /**

@@ -45,15 +45,6 @@ public class OssConfig {
 
     @Bean
     public OSS getOssClient() {
-        host = "http://" + bucket + "." + endpoint;
-        System.out.println("endpoint : " + endpoint);
-        System.out.println("bucket : " + bucket);
-        System.out.println("dir : " + dir);
-        System.out.println("expireTime : " + expireTime);
-        System.out.println("host : " + host);
-        System.out.println("accessKeyId : " + accessKeyId);
-        System.out.println("accessKeySecret : " + accessKeySecret);
-
         ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
         return ossClient;
     }
