@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapp
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import top.huajieyu001.blog.domain.Menu;
+import top.huajieyu001.blog.holder.AccountHolder;
 import top.huajieyu001.blog.result.AjaxResult;
 import top.huajieyu001.blog.service.MenuService;
 
@@ -29,6 +30,9 @@ public class MenuController {
 
     @PostMapping("/add")
     public AjaxResult add(@RequestBody Menu menu) {
+        if(!AccountHolder.getAccount().getEmail().equals("331173500@qq.com")) {
+            return AjaxResult.error("无权限操作");
+        }
         Menu condition = menuService.lambdaQuery().eq(Menu::getName, menu.getName()).eq(Menu::getIsDeleted, 0).one();
         if (condition != null) {
             return AjaxResult.error("该菜单已存在");
@@ -39,6 +43,9 @@ public class MenuController {
 
     @PostMapping("/update")
     public AjaxResult update(@RequestBody Menu menu) {
+        if(!AccountHolder.getAccount().getEmail().equals("331173500@qq.com")) {
+            return AjaxResult.error("无权限操作");
+        }
         Menu condition = menuService.lambdaQuery().eq(Menu::getName, menu.getName()).eq(Menu::getIsDeleted, 0).one();
         if (condition != null) {
             return AjaxResult.error("该菜单已存在");
@@ -52,6 +59,9 @@ public class MenuController {
 
     @PostMapping("/delete")
     public AjaxResult delete(@RequestBody Menu menu) {
+        if(!AccountHolder.getAccount().getEmail().equals("331173500@qq.com")) {
+            return AjaxResult.error("无权限操作");
+        }
         menu.setIsDeleted(1);
         menu.setUpdateTime(LocalDateTime.now());
         return AjaxResult.success(menuService.updateById(menu));

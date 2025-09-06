@@ -2,6 +2,7 @@ package top.huajieyu001.blog.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
+import com.baomidou.mybatisplus.extension.conditions.update.LambdaUpdateChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -36,11 +37,15 @@ public class ArticleController {
     @PostMapping("/add")
     public AjaxResult add(@RequestBody Article article) {
         article.setIsDeleted(0);
+        article.setCreateBy(AccountHolder.getAccount().getUsername());
         return AjaxResult.success(service.save(article));
     }
 
     @PostMapping("/delete")
     public AjaxResult delete(@RequestBody Article article) {
+        if(!AccountHolder.verifyPermissions(article.getCreateBy())) {
+            return AjaxResult.error("无权限操作");
+        }
         article.setIsDeleted(1);
         article.setUpdateTime(LocalDateTime.now());
         return AjaxResult.success(service.updateById(article));
@@ -48,6 +53,9 @@ public class ArticleController {
 
     @PostMapping("/update")
     public AjaxResult update(@RequestBody Article article) {
+        if(!AccountHolder.verifyPermissions(article.getCreateBy())) {
+            return AjaxResult.error("无权限操作");
+        }
         article.setVersion(article.getVersion() == null ? 1 : article.getVersion() + 1);
         article.setUpdateTime(LocalDateTime.now());
         return AjaxResult.success(service.updateById(article));
