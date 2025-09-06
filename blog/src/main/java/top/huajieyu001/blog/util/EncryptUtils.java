@@ -3,6 +3,8 @@ package top.huajieyu001.blog.util;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import top.huajieyu001.blog.domain.Account;
 
@@ -62,14 +64,17 @@ public class EncryptUtils {
     public static String createToken(Account account, String signature) {
         HashMap<String, Object> map = new HashMap<>();
         Calendar instance = Calendar.getInstance();
-        instance.add(Calendar.DATE, 30);
+        instance.add(Calendar.HOUR, 12);
 
-        return JWT.create()
-                .withHeader(map)
-                .withClaim("username", account.getUsername())
-                .withClaim("email", account.getEmail())
-                .withExpiresAt(instance.getTime())
-                .sign(Algorithm.HMAC256(SIGNATURE));
+        try {
+            return JWT.create()
+                    .withHeader(map)
+                    .withClaim("account", new ObjectMapper().writeValueAsString(account))
+                    .withExpiresAt(instance.getTime())
+                    .sign(Algorithm.HMAC256(SIGNATURE));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
