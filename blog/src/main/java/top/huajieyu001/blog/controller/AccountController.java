@@ -3,6 +3,7 @@ package top.huajieyu001.blog.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import top.huajieyu001.blog.domain.form.AccountForm;
+import top.huajieyu001.blog.domain.form.UpdatePwdForm;
 import top.huajieyu001.blog.result.AjaxResult;
 import top.huajieyu001.blog.result.BlogResult;
 import top.huajieyu001.blog.service.AccountService;
@@ -39,4 +40,9 @@ public class AccountController {
 //    public String logout() {
 //        return accountService.logout();
 //    }
+
+    @PostMapping("/changePassword")
+    public AjaxResult changePassword(@RequestBody UpdatePwdForm form) {
+        return accountService.changePassword(form);
+    }
 }
