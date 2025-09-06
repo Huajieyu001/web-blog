@@ -44,5 +44,5 @@ public class RedisConstant {
 
     public static final String REDIS_KEY_CONTENT_INCR_ID = "content:incr_id";
 
-
+    public static final String REDIS_KEY_TOKEN_BLACK_LIST = "token:black_list:";
 }

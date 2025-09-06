@@ -1,6 +1,7 @@
 package top.huajieyu001.blog.holder;
 
 import top.huajieyu001.blog.domain.Account;
+import top.huajieyu001.blog.domain.TokenPojo;
 
 /**
  * @Author huajieyu
@@ -10,13 +11,25 @@ import top.huajieyu001.blog.domain.Account;
  */
 public class AccountHolder {
 
-    public static final ThreadLocal<Account> tl = new ThreadLocal<Account>();
+    public static final ThreadLocal<TokenPojo> tl = new ThreadLocal<TokenPojo>();
 
-    public static Account getAccount() {
+    public static TokenPojo getAccount() {
         return tl.get();
     }
 
-    public static void setAccount(Account account) {
+    public static void setAccount(TokenPojo account) {
         tl.set(account);
+    }
+
+    public static boolean verifyPermissions(String username){
+        if(tl.get() == null || username == null || username.isEmpty()){
+            return false;
+        }
+
+        if(tl.get().getUsername().equals(username)){
+            return true;
+        }
+
+        return false;
     }
 }
